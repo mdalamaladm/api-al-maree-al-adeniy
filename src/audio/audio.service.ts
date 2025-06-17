@@ -1,22 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { S3Service } from 'src/s3/s3.service';
+
 
 @Injectable()
 export class AudioService {
-  private audio = [
-    {
-      id: '123',
-      name: 'sample-1',
-      key: 'zxc'
+  constructor(private readonly s3Service: S3Service) {}
+
+  async findOne(id: string) {
+    try {
+      return await this.s3Service.getPresignedDownloadURl("audio/muhadharat/1. [MUHADHARAH][ADAB][NODATE][NOPLACE][CLEAN][CONFIRM][PM][2x] صلة الرحم.mp3", 300);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(error);
     }
-  ];
-
-  findOne(id: string) {
-    const audio = this.audio.find(a => a.id === id);
-
-    if (!audio) {
-      throw new NotFoundException(`Audio #${id} not found`);
-    }
-
-    return audio;
   }
 }
