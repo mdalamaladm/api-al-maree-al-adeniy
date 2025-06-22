@@ -1,8 +1,32 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/api-al-maree-al-adeniy/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/api-al-maree-al-adeniy/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/api-al-maree-al-adeniy",
+  "projects": {
+    "api-al-maree-al-adeniy": {
+      "type": "application",
+      "root": "apps/api-al-maree-al-adeniy",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-al-maree-al-adeniy/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-al-maree-al-adeniy/tsconfig.app.json"
+      }
+    },
+    "cli": {
+      "type": "application",
+      "root": "apps/cli",
+      "entryFile": "main",
+      "sourceRoot": "apps/cli/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/cli/tsconfig.app.json"
+      }
+    }
   }
 }

@@ -3,7 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AudioModule } from './audio/audio.module';
 import { ConfigModule } from '@nestjs/config';
-import { S3Service } from './s3/s3.service';
+import { PrismaService } from './prisma/prisma.service';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -12,8 +13,9 @@ import { S3Service } from './s3/s3.service';
       envFilePath: '.env',
       isGlobal: true,
     }),
+    AdminModule,
   ],
   controllers: [AppController],
-  providers: [AppService, S3Service],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}

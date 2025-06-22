@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id Int @id @default(autoincrement())
+  username String @unique
+  name String @db.VarChar(100)
+  password String
+  salt String
+}
+
+model File {
+  id Int @id @default(autoincrement())
+  name String
+  audios Audio[]
+}
+
+model Type {
+  id Int @id @default(autoincrement())
+  name String
+  audios Audio[]
+}
+
+model Content {
+  id Int @id @default(autoincrement())
+  name String
+  isLecture Boolean
+  audios Audio[]
+}
+
+model Audio {
+  id Int @id @default(autoincrement())
+  key String
+  file File @relation(fields: [fileId], references: [id])
+  type Type @relation(fields: [typeId], references: [id])
+  content Content @relation(fields: [contentId], references: [id])
+  fileId Int
+  typeId Int
+  contentId Int
+}
