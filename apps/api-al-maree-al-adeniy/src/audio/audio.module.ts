@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AudioController } from './audio.controller';
 import { AudioService } from './audio.service';
-import { S3Service } from 'src/s3/s3.service';
+import { S3Service } from '../s3/s3.service';
 
 @Module({
   controllers: [AudioController],
