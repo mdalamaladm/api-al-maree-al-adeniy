@@ -3,8 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AudioModule } from './audio/audio.module';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaService } from './prisma/prisma.service';
 import { AdminModule } from './admin/admin.module';
+import { S3Module } from './s3/s3.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -14,8 +15,10 @@ import { AdminModule } from './admin/admin.module';
       isGlobal: true,
     }),
     AdminModule,
+    S3Module,
+    PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService],
 })
 export class AppModule {}
