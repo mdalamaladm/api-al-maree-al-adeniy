@@ -1,14 +1,13 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { CreateAdminDto } from './dto/create-admin.dto';
+import { LoginAdminDto } from './dto/login-admin.dto';
 
 @Controller('admin')
 export class AdminController {
   constructor (private readonly adminService: AdminService) {}
 
-  @Post()
-  @HttpCode(204)
-  create(@Body() createAdminDto: CreateAdminDto) {
-    console.log(createAdminDto);
+  @Post('auth')
+  async login(@Body() loginAdminDto: LoginAdminDto) {
+    return await this.adminService.login(loginAdminDto);
   }
 }
