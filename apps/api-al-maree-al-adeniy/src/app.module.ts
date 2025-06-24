@@ -6,6 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './admin/admin.module';
 import { S3Module } from './s3/s3.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { FileModule } from './file/file.module';
+import { TypeModule } from './type/type.module';
+import { ContentModule } from './content/content.module';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { PrismaModule } from './prisma/prisma.module';
     AdminModule,
     S3Module,
     PrismaModule,
+    FileModule,
+    TypeModule,
+    ContentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
