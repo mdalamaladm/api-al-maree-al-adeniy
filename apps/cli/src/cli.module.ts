@@ -5,6 +5,8 @@ import { CreateAdminQuestions } from './questions/create-admin-questions';
 import { GetAdminCommand } from './commands/get-admin.command';
 import { DeleteAdminCommand } from './commands/delete-admin.command';
 import { DeleteAdminQuestions } from './questions/delete-admin-questions';
+import { CreateCategoryCommand } from './commands/create-category-command';
+import { CreateCategoryQuestions } from './questions/create-category-questions';
 
 @Module({
   providers: [
@@ -13,6 +15,8 @@ import { DeleteAdminQuestions } from './questions/delete-admin-questions';
     DeleteAdminCommand,
     DeleteAdminQuestions,
     GetAdminCommand,
+    CreateCategoryCommand,
+    CreateCategoryQuestions,
     PrismaService
   ],
 })
