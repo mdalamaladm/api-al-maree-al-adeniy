@@ -25,10 +25,19 @@ export class CreateCategoryQuestions {
   }
 
   @Question({
-    message: 'Please enter new data for the category',
+    message: 'Please enter a name for the new category',
     name: 'name'
   })
   parseName(val: string) {
+    return val;
+  }
+
+  @Question({
+    message: 'Please enter an alias for the new category',
+    name: 'alias',
+    when: (answer) => answer.category !== 'content'
+  })
+  parseAlias(val: string) {
     return val;
   }
 }

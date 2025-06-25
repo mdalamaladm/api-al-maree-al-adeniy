@@ -11,6 +11,7 @@ CREATE TABLE "Admin" (
 CREATE TABLE "Media" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "alias" TEXT NOT NULL,
 
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
@@ -19,6 +20,7 @@ CREATE TABLE "Media" (
 CREATE TABLE "Type" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "alias" TEXT NOT NULL,
 
     CONSTRAINT "Type_pkey" PRIMARY KEY ("id")
 );
