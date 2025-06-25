@@ -6,22 +6,16 @@ export class TypeService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data) {
-    const type = await this.prisma.type.create({ data });
-
-    return type;
+    return await this.prisma.type.create({ data });
   }
 
   async findAll() {
-    const types = await this.prisma.type.findMany();
-
-    return types;
+    return await this.prisma.type.findMany();
   }
 
   async delete(id) {
-    const type = await this.prisma.type.delete({
+    return await this.prisma.type.delete({
       where: { id }
     })
-
-    return type;
   }
 }

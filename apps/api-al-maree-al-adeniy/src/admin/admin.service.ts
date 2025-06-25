@@ -18,13 +18,13 @@ export class AdminService {
     });
 
     if (!admin) {
-      throw new HttpException('Username or password is invalid', HttpStatus.UNAUTHORIZED)
+      throw new HttpException('Username or password is invalid', HttpStatus.UNAUTHORIZED);
     }
 
     const match = compareSync(admin.salt + payload.password, admin.password);
 
     if (!match) {
-      throw new HttpException('Username or password is invalid', HttpStatus.UNAUTHORIZED)
+      throw new HttpException('Username or password is invalid', HttpStatus.UNAUTHORIZED);
     }
 
     return {

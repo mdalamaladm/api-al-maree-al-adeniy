@@ -6,22 +6,16 @@ export class MediaService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data) {
-    const media = await this.prisma.media.create({ data });
-
-    return media;
+    return await this.prisma.media.create({ data });
   }
 
   async findAll() {
-    const medias = await this.prisma.media.findMany();
-
-    return medias;
+    return await this.prisma.media.findMany();
   }
 
   async delete(id) {
-    const media = await this.prisma.media.delete({
+    return await this.prisma.media.delete({
       where: { id }
     });
-
-    return media;
   }
 }
