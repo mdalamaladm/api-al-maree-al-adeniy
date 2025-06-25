@@ -7,7 +7,7 @@ import { PrismaService } from '../prisma/prisma.service';
 export class FileService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly s3: S3Service
+    private readonly s3Client: S3Service
   ) {}
 
   async create(data) {
@@ -20,7 +20,7 @@ export class FileService {
 
   async findOne(id: string) {
     try {
-      return await this.s3.getPresignedDownloadURl("file/muhadharat/1. [MUHADHARAH][ADAB][NODATE][NOPLACE][CLEAN][CONFIRM][PM][2x] صلة الرحم.mp3", 300);
+      return await this.s3Client.getPresignedDownloadUrl("file/muhadharat/1. [MUHADHARAH][ADAB][NODATE][NOPLACE][CLEAN][CONFIRM][PM][2x] صلة الرحم.mp3", 300);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(error);
