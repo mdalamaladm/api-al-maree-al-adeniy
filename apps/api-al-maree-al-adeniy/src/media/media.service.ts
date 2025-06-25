@@ -2,26 +2,26 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
-export class FileService {
+export class MediaService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data) {
-    const file = await this.prisma.file.create({ data });
+    const media = await this.prisma.media.create({ data });
 
-    return file;
+    return media;
   }
 
   async findAll() {
-    const files = await this.prisma.file.findMany();
+    const medias = await this.prisma.media.findMany();
 
-    return files;
+    return medias;
   }
 
   async delete(id) {
-    const file = await this.prisma.file.delete({
+    const media = await this.prisma.media.delete({
       where: { id }
     });
 
-    return file;
+    return media;
   }
 }

@@ -1,4 +1,4 @@
-// This is your Prisma schema file,
+// This is your Prisma schema media,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
@@ -20,7 +20,7 @@ model Admin {
   salt String
 }
 
-model File {
+model Media {
   id Int @id @default(autoincrement())
   name String
   audios Audio[]
@@ -42,10 +42,10 @@ model Content {
 model Audio {
   id Int @id @default(autoincrement())
   key String
-  file File @relation(fields: [fileId], references: [id])
+  media Media @relation(fields: [mediaId], references: [id])
   type Type @relation(fields: [typeId], references: [id])
   content Content @relation(fields: [contentId], references: [id])
-  fileId Int
+  mediaId Int
   typeId Int
   contentId Int
 }

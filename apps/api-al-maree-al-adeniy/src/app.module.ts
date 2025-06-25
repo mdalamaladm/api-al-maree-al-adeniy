@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './admin/admin.module';
 import { S3Module } from './s3/s3.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { FileModule } from './file/file.module';
+import { MediaModule } from './media/media.module';
 import { TypeModule } from './type/type.module';
 import { ContentModule } from './content/content.module';
 
@@ -20,7 +20,7 @@ import { ContentModule } from './content/content.module';
     AdminModule,
     S3Module,
     PrismaModule,
-    FileModule,
+    MediaModule,
     TypeModule,
     ContentModule,
   ],

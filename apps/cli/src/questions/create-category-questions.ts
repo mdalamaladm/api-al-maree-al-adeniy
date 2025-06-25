@@ -6,7 +6,7 @@ export class CreateCategoryQuestions {
     type: 'list',
     message: 'Which category',
     name: 'category',
-    choices: ['file', 'type', 'content']
+    choices: ['media', 'type', 'content']
   })
   parseCategory(val: string) {
     return val;

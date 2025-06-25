@@ -4,6 +4,9 @@ import { AdminController } from './admin.controller';
 import { S3Module } from '../s3/s3.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
+import { MediaModule } from '../media/media.module';
+import { TypeModule } from '../type/type.module';
+import { ContentModule } from '../content/content.module';
 
 @Module({
   imports: [
@@ -13,7 +16,10 @@ import { JwtModule } from '@nestjs/jwt';
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' }
-    })
+    }),
+    MediaModule,
+    TypeModule,
+    ContentModule,
   ],
   controllers: [AdminController],
   providers: [AdminService]
