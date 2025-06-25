@@ -1,4 +1,4 @@
-export class GetAudioDto {
+export class GetFileDto {
   readonly name: string;
   readonly key: string;
 }

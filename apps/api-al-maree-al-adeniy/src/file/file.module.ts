@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AudioController } from './audio.controller';
-import { AudioService } from './audio.service';
+import { FileController } from './file.controller';
+import { FileService } from './file.service';
 import { S3Module } from '../s3/s3.module';
 import { PrismaModule } from '../prisma/prisma.module';
 
@@ -9,7 +9,7 @@ import { PrismaModule } from '../prisma/prisma.module';
     PrismaModule,
     S3Module,
   ],
-  controllers: [AudioController],
-  providers: [AudioService],
+  controllers: [FileController],
+  providers: [FileService],
 })
-export class AudioModule {}
+export class FileModule {}

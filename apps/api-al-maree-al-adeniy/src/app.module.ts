@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AudioModule } from './audio/audio.module';
+import { FileModule } from './file/file.module';
 import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from './admin/admin.module';
 import { S3Module } from './s3/s3.module';
@@ -12,7 +12,7 @@ import { ContentModule } from './content/content.module';
 
 @Module({
   imports: [
-    AudioModule,
+    FileModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,

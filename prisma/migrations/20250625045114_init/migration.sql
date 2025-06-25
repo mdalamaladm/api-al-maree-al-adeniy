@@ -33,21 +33,22 @@ CREATE TABLE "Content" (
 );
 
 -- CreateTable
-CREATE TABLE "Audio" (
+CREATE TABLE "File" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
     "key" TEXT NOT NULL,
     "mediaId" INTEGER NOT NULL,
     "typeId" INTEGER NOT NULL,
     "contentId" INTEGER NOT NULL,
 
-    CONSTRAINT "Audio_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "File_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
-ALTER TABLE "Audio" ADD CONSTRAINT "Audio_mediaId_fkey" FOREIGN KEY ("mediaId") REFERENCES "Media"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_mediaId_fkey" FOREIGN KEY ("mediaId") REFERENCES "Media"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Audio" ADD CONSTRAINT "Audio_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "Type"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "Type"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Audio" ADD CONSTRAINT "Audio_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

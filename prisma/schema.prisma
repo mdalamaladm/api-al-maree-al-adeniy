@@ -23,24 +23,25 @@ model Admin {
 model Media {
   id Int @id @default(autoincrement())
   name String
-  audios Audio[]
+  files File[]
 }
 
 model Type {
   id Int @id @default(autoincrement())
   name String
-  audios Audio[]
+  files File[]
 }
 
 model Content {
   id Int @id @default(autoincrement())
   name String
   isLecture Boolean
-  audios Audio[]
+  files File[]
 }
 
-model Audio {
+model File {
   id Int @id @default(autoincrement())
+  name String
   key String
   media Media @relation(fields: [mediaId], references: [id])
   type Type @relation(fields: [typeId], references: [id])
