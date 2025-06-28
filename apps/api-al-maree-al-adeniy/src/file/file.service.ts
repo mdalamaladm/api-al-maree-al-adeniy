@@ -20,7 +20,16 @@ export class FileService {
 
   async findOne(id: string) {
     try {
-      return await this.s3Client.getPresignedDownloadUrl("file/muhadharat/1. [MUHADHARAH][ADAB][NODATE][NOPLACE][CLEAN][CONFIRM][PM][2x] صلة الرحم.mp3", 300);
+      return await this.s3Client.getPresignedDownloadUrl("audio/muhadharat/test.mp3", 300);
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(error);
+    }
+  }
+
+  async getUploadPresigned(key: string) {
+    try {
+      return await this.s3Client.getUploadPresignedUrl(key);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(error);

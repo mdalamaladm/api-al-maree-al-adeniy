@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { S3Service } from '../s3/s3.service';
@@ -21,9 +21,9 @@ export class FileController {
     return this.fileService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.fileService.findOne(id);
+  @Get('upload-presigned')
+  async getUploadPresigned(@Query('key') key: string) {
+    return await this.fileService.getUploadPresigned(key);
   }
 
   @Post('multipart-upload-presigned')
@@ -32,5 +32,10 @@ export class FileController {
     const presignedUrls = await this.s3Client.getMultipartUploadPresignedUrls(payload.key, payload.fileSize, uploadId);
 
     return presignedUrls;
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.fileService.findOne(id);
   }
 }
