@@ -1,4 +1,4 @@
-import { CreateMultipartUploadCommand, GetBucketEncryptionCommand, GetObjectCommand, PutObjectCommand, S3Client, S3ClientConfig, UploadPartCommand } from '@aws-sdk/client-s3';
+import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, GetBucketEncryptionCommand, GetObjectCommand, PutObjectCommand, S3Client, S3ClientConfig, UploadPartCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -60,7 +60,7 @@ export class S3Service {
     return startUploadResponse.UploadId;
   }
 
-  async getMultipartUploadPresignedUrls (key: string, fileSize: number, uploadId: string | undefined) {
+  async getMultipartUploadPresignedUrls (key: string, uploadId: string | undefined, fileSize: number) {
     const fiveMB = 5_000_000
     const numberOfParts = Math.ceil(fileSize / fiveMB);
 
@@ -82,5 +82,18 @@ export class S3Service {
     }
 
     return presignedUrls;
+  }
+
+  async completeMultipartUpload (key, uploadId, payload) {
+    const completeMultipartUploadCommand = new CompleteMultipartUploadCommand({
+      Bucket: this.bucketName,
+      Key: key,
+      UploadId: uploadId,
+      MultipartUpload: {
+        Parts: payload
+      }
+    });
+
+    return await this.s3Client.send(completeMultipartUploadCommand);
   }
 }

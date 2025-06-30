@@ -1,4 +1,3 @@
-export class MultipartUploadPresigned {
-  key: string;
+export class MultipartUploadPresignedDto {
   fileSize: number;
 }
