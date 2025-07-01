@@ -27,27 +27,27 @@ export class FileController {
     return await this.fileService.getUploadPresigned(key);
   }
 
-  @Get('multipart-upload/upload-id/:key')
-  async getMultipartUploadUploadId(@Param('key') key: string) {
+  @Get('multipart-upload/upload-id')
+  async getMultipartUploadUploadId(@Query('key') key: string) {
     return await this.s3Client.getMultipartUploadId(key);
   }
 
-  @Post('multipart-upload/presigned/:key/:uploadId')
+  @Post('multipart-upload/presigned')
   async getMultipartUploadPresigned(
     @Body() payload: MultipartUploadPresignedDto,
-    @Param('key') key: string,
-    @Param('uploadId') uploadId: string,
+    @Query('key') key: string,
+    @Query('uploadId') uploadId: string,
   ) {
     const presignedUrls = await this.s3Client.getMultipartUploadPresignedUrls(key, uploadId, payload.fileSize);
 
     return presignedUrls;
   }
 
-  @Post('multipart-upload/complete/:key/:uploadId')
+  @Post('multipart-upload/complete')
   async completeMultipartUpload(
     @Body() payload: MultipartUploadCompleteDto[],
-    @Param('key') key: string,
-    @Param('uploadId') uploadId: string,
+    @Query('key') key: string,
+    @Query('uploadId') uploadId: string,
   ) {
     const response = await this.s3Client.completeMultipartUpload(key, uploadId, payload);
 
