@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -13,9 +13,28 @@ export class ContentService {
     return await this.prisma.content.findMany();
   }
 
+  async update(id, data) {
+    delete data.id;
+
+    if (id === 1) {
+      throw new HttpException('Cannot update default value', HttpStatus.BAD_REQUEST);
+    } else {
+      return await this.prisma.content.update({
+        where: {
+          id
+        },
+        data
+      });
+    }
+  }
+
   async delete(id) {
-    return await this.prisma.content.delete({
-      where: { id }
-    })
+    if (id === 1) {
+      throw new HttpException('Cannot delete default value', HttpStatus.BAD_REQUEST);
+    } else {
+      return await this.prisma.content.delete({
+        where: { id }
+      });
+    }
   }
 }
