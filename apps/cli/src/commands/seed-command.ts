@@ -11,25 +11,25 @@ export class SeedCommand extends CommandRunner {
     try {
       const medias = await this.prisma.media.createManyAndReturn({
         data: [
-          { name: 'الوسيطة المجهولة', alias: 'nomedia' },
-          { name: 'الصوتية', alias: 'audio' },
-          { name: 'الفيديو', alias: 'video'},
+          { name: 'الوسيطة المجهولة'  },
+          { name: 'الصوتية'  },
+          { name: 'الفيديو' },
         ]
       });
 
-      console.log(`Initiate media data:\n${medias.map(e => ` - ${e.name} (Alias: ${e.alias})`).join('\n')}\n`);
+      console.log(`Initiate media data:\n${medias.map(e => ` - ${e.name}`).join('\n')}\n`);
 
       const types = await this.prisma.type.createManyAndReturn({
         data: [
-          { name: 'النوع المجهول', alias: 'notype' },
-          { name: 'المحاضرات', alias: 'muhadharat' },
-          { name: 'الخطب', alias: 'khuthab'},
-          { name: 'الدروس', alias: 'durus'},
-          { name: 'الفتاوى', alias: 'fatawa'},
+          { name: 'النوع المجهول'  },
+          { name: 'المحاضرات'  },
+          { name: 'الخطب' },
+          { name: 'الدروس' },
+          { name: 'الفتاوى' },
         ]
       });
 
-      console.log(`Initiate type data:\n${types.map(e => ` - ${e.name} (Alias: ${e.alias})`).join('\n')}\n`);
+      console.log(`Initiate type data:\n${types.map(e => ` - ${e.name}`).join('\n')}\n`);
 
       const contents = await this.prisma.content.createManyAndReturn({
         data: [

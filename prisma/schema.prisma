@@ -23,14 +23,12 @@ model Admin {
 model Media {
   id Int @id @default(autoincrement())
   name String
-  alias String
   files File[]
 }
 
 model Type {
   id Int @id @default(autoincrement())
   name String
-  alias String
   files File[]
 }
 
@@ -42,13 +40,12 @@ model Content {
 }
 
 model File {
-  id Int @id @default(autoincrement())
+  key String @id
   name String
-  key String
-  media Media @relation(fields: [mediaId], references: [id])
-  type Type @relation(fields: [typeId], references: [id])
-  content Content @relation(fields: [contentId], references: [id])
-  mediaId Int
-  typeId Int
-  contentId Int
+  media Media @relation(fields: [mediaId], references: [id], onDelete: SetDefault)
+  type Type @relation(fields: [typeId], references: [id], onDelete: SetDefault)
+  content Content @relation(fields: [contentId], references: [id], onDelete: SetDefault)
+  mediaId Int @default(1)
+  typeId Int @default(1)
+  contentId Int @default(1)
 }

@@ -11,7 +11,6 @@ CREATE TABLE "Admin" (
 CREATE TABLE "Media" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "alias" TEXT NOT NULL,
 
     CONSTRAINT "Media_pkey" PRIMARY KEY ("id")
 );
@@ -20,7 +19,6 @@ CREATE TABLE "Media" (
 CREATE TABLE "Type" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
-    "alias" TEXT NOT NULL,
 
     CONSTRAINT "Type_pkey" PRIMARY KEY ("id")
 );
@@ -36,21 +34,20 @@ CREATE TABLE "Content" (
 
 -- CreateTable
 CREATE TABLE "File" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
     "key" TEXT NOT NULL,
-    "mediaId" INTEGER NOT NULL,
-    "typeId" INTEGER NOT NULL,
-    "contentId" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "mediaId" INTEGER NOT NULL DEFAULT 1,
+    "typeId" INTEGER NOT NULL DEFAULT 1,
+    "contentId" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "File_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "File_pkey" PRIMARY KEY ("key")
 );
 
 -- AddForeignKey
-ALTER TABLE "File" ADD CONSTRAINT "File_mediaId_fkey" FOREIGN KEY ("mediaId") REFERENCES "Media"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_mediaId_fkey" FOREIGN KEY ("mediaId") REFERENCES "Media"("id") ON DELETE SET DEFAULT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "File" ADD CONSTRAINT "File_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "Type"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "Type"("id") ON DELETE SET DEFAULT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "File" ADD CONSTRAINT "File_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "File" ADD CONSTRAINT "File_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES "Content"("id") ON DELETE SET DEFAULT ON UPDATE CASCADE;

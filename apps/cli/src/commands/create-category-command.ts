@@ -21,10 +21,7 @@ export class CreateCategoryCommand extends CommandRunner {
 
       if (category === 'content') {
         data.isLecture = isLecture;
-      } else {
-        data.alias = answer.alias;
       }
-
       const res = await this.prisma[category].create({ data });
       
       console.log(`${category} created!\n\nname: ${res.name}`);
