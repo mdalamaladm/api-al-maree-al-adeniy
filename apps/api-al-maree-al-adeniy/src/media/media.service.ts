@@ -14,7 +14,7 @@ export class MediaService {
   }
 
   async update(id, data) {
-    if (id === 1) {
+    if (id === 1 || id === 2 || id === 3) {
       throw new HttpException('Cannot update default value', HttpStatus.BAD_REQUEST);
     } else {
       return await this.prisma.media.update({
@@ -27,7 +27,7 @@ export class MediaService {
   }
 
   async delete(id) {
-    if (id === 1) {
+    if (id === 1 || id === 2 || id === 3) {
       throw new HttpException('Cannot delete default value', HttpStatus.BAD_REQUEST);
     } else {
       return await this.prisma.media.delete({

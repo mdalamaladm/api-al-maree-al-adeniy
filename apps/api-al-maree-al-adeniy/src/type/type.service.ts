@@ -14,7 +14,7 @@ export class TypeService {
   }
 
   async update(id, data) {
-    if (id === 1) {
+    if (id === 1 || id === 2 || id === 3 || id === 4 || id === 5) {
       throw new HttpException('Cannot update default value', HttpStatus.BAD_REQUEST);
     } else {
       return await this.prisma.type.update({
@@ -27,7 +27,7 @@ export class TypeService {
   }
 
   async delete(id) {
-    if (id === 1) {
+    if (id === 1 || id === 2 || id === 3 || id === 4 || id === 5) {
       throw new HttpException('Cannot delete default value', HttpStatus.BAD_REQUEST);
     } else {
       return await this.prisma.type.delete({
