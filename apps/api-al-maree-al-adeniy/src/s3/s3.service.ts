@@ -1,4 +1,4 @@
-import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, GetBucketEncryptionCommand, GetObjectCommand, PutObjectCommand, S3Client, S3ClientConfig, UploadPartCommand } from '@aws-sdk/client-s3';
+import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client, UploadPartCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -14,7 +14,7 @@ export class S3Service {
     this.s3Client = new S3Client();
   }
 
-  async getPresignedDownloadUrl (key: string, expiresInSeconds: number = 300): Promise<string> {
+  async getDownloadPresignedUrl (key: string, expiresInSeconds: number = 300): Promise<string> {
     try {
       const command = new GetObjectCommand({
         Bucket: this.bucketName,
@@ -95,5 +95,14 @@ export class S3Service {
     });
 
     return await this.s3Client.send(completeMultipartUploadCommand);
+  }
+
+  async deleteObject(key: string) {
+    const deleteObjectCommand = new DeleteObjectCommand({
+      Bucket: this.bucketName,
+      Key: key,
+    });
+
+    return await this.s3Client.send(deleteObjectCommand);
   }
 }
