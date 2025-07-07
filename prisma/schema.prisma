@@ -40,7 +40,8 @@ model Content {
 }
 
 model File {
-  key String @id
+  id Int @id @default(autoincrement())
+  key String
   name String
   media Media @relation(fields: [mediaId], references: [id], onDelete: SetDefault)
   type Type @relation(fields: [typeId], references: [id], onDelete: SetDefault)

@@ -34,13 +34,14 @@ CREATE TABLE "Content" (
 
 -- CreateTable
 CREATE TABLE "File" (
+    "id" SERIAL NOT NULL,
     "key" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "mediaId" INTEGER NOT NULL DEFAULT 1,
     "typeId" INTEGER NOT NULL DEFAULT 1,
     "contentId" INTEGER NOT NULL DEFAULT 1,
 
-    CONSTRAINT "File_pkey" PRIMARY KEY ("key")
+    CONSTRAINT "File_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey

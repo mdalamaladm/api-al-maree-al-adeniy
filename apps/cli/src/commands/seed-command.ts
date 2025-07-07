@@ -34,8 +34,6 @@ export class SeedCommand extends CommandRunner {
       const contents = await this.prisma.content.createManyAndReturn({
         data: [
           { name: 'الموضوع المجهول', isLecture: false },
-          { name: 'العقيدة الواسطية', isLecture: true },
-          { name: 'العقيدة والتوحيد', isLecture: false },
         ]
       });
 
