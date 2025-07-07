@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { FileService } from './file.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { S3Service } from '../s3/s3.service';
 import { MultipartUploadPresignedDto } from './dto/multipart-upload-presigned.dto';
 import { MultipartUploadCompleteDto } from './dto/multipart-upload-complete.dto';
+import { UpdateFileDto } from './dto/update-file.dto';
 
 @Controller('file')
 export class FileController {
@@ -12,19 +13,9 @@ export class FileController {
     private readonly s3Client: S3Service,
   ) {}
 
-  @Post()
-  create(@Body() createFileDto: CreateFileDto[]) {
-    return this.fileService.create(createFileDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.fileService.findAll();
-  }
-
   @Get('upload/presigned')
-  async getUploadPresigned(@Query('key') key: string) {
-    return await this.fileService.getUploadPresigned(key);
+  async getUploadPresigned() {
+    return await this.fileService.getUploadPresigned();
   }
 
   @Get('multipart-upload/upload-id')
@@ -54,8 +45,31 @@ export class FileController {
     return response;
   }
 
-  @Get(':id')
+  @Post()
+  create(@Body() data: CreateFileDto) {
+    return this.fileService.create(data);
+  }
+
+  @Get()
+  findAll() {
+    return this.fileService.findAll();
+  }
+
+  @Get('/:id')
   findOne(@Param('id') id: string) {
     return this.fileService.findOne(id);
+  }
+
+  @Put('/:id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: UpdateFileDto
+  ) {
+    return this.fileService.update(id, data);
+  }
+
+  @Delete('/:id')
+  delete(@Param('id', ParseIntPipe) id: string) {
+    return this.fileService.delete(id)
   }
 }

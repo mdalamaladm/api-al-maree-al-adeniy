@@ -11,25 +11,62 @@ export class FileService {
   ) {}
 
   async create(data) {
-    return await this.prisma.file.createManyAndReturn({ data })
+    return await this.prisma.file.create({ data })
   }
 
   async findAll() {
-    return await this.prisma.file.findMany();
+    return await this.prisma.file.findMany({
+      select: {
+        id: true,
+        name: true,
+        mediaId: true,
+        typeId: true,
+        contentId: true,
+      }
+    });
   }
 
   async findOne(id: string) {
     try {
-      return await this.s3Client.getPresignedDownloadUrl("audio/muhadharat/test.mp3", 300);
+      return await this.s3Client.getDownloadPresignedUrl("audio/muhadharat/test.mp3", 300);
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(error);
     }
   }
 
-  async getUploadPresigned(key: string) {
+  async update(id, data) {
+    return await this.prisma.file.update({
+      where: {
+        id
+      },
+      data
+    });
+  }
+
+  async delete(id) {
+    const { key } = this.prisma.file.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        key: true,
+      }
+    });
+
+    await this.s3Client.deleteObject(key);
+
+    return await this.prisma.type.delete({
+      where: { id }
+    });
+  }
+
+  async getUploadPresigned() {
     try {
-      return await this.s3Client.getUploadPresignedUrl(key);
+      const key = crypto.randomUUID();
+      const presigned = await this.s3Client.getUploadPresignedUrl(key);
+
+      return { key, presigned }
     } catch (error) {
       console.log(error);
       throw new InternalServerErrorException(error);
