@@ -10,7 +10,13 @@ export class TypeService {
   }
 
   async findAll() {
-    return await this.prisma.type.findMany();
+    return await this.prisma.type.findMany({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+    });
   }
 
   async update(id, data) {

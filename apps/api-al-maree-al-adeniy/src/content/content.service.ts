@@ -10,7 +10,13 @@ export class ContentService {
   }
 
   async findAll() {
-    return await this.prisma.content.findMany();
+    return await this.prisma.content.findMany({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+    });
   }
 
   async update(id, data) {

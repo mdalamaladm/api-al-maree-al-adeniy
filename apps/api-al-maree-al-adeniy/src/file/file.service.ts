@@ -16,12 +16,20 @@ export class FileService {
 
   async findAll() {
     return await this.prisma.file.findMany({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
       select: {
         id: true,
         name: true,
         mediaId: true,
         typeId: true,
         contentId: true,
+        media: { select: { name: true } },
+        type: { select: { name: true } },
+        content: { select: { name: true } },
       }
     });
   }
@@ -45,18 +53,19 @@ export class FileService {
   }
 
   async delete(id) {
-    const { key } = this.prisma.file.findFirst({
+    const result = await this.prisma.file.findFirst({
       where: {
         id,
       },
-      select: {
-        key: true,
-      }
     });
 
-    await this.s3Client.deleteObject(key);
+    if (!result) {
+      throw new InternalServerErrorException('Id is not found');
+    }
 
-    return await this.prisma.type.delete({
+    await this.s3Client.deleteObject(result.key);
+
+    return await this.prisma.file.delete({
       where: { id }
     });
   }

@@ -10,7 +10,13 @@ export class MediaService {
   }
 
   async findAll() {
-    return await this.prisma.media.findMany();
+    return await this.prisma.media.findMany({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+    });
   }
 
   async update(id, data) {
