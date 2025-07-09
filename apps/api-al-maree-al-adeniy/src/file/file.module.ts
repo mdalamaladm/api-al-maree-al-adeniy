@@ -9,7 +9,8 @@ import { PrismaModule } from '../prisma/prisma.module';
     PrismaModule,
     S3Module,
   ],
-  controllers: [FileController],
+  exports: [FileService],
   providers: [FileService],
+  controllers: [FileController],
 })
 export class FileModule {}

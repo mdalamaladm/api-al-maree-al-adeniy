@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { MediaModule } from '../media/media.module';
 import { TypeModule } from '../type/type.module';
 import { ContentModule } from '../content/content.module';
+import { FileModule } from '../file/file.module';
 
 @Module({
   imports: [
@@ -15,8 +16,9 @@ import { ContentModule } from '../content/content.module';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' }
+      signOptions: { expiresIn: '1m' }
     }),
+    FileModule,
     MediaModule,
     TypeModule,
     ContentModule,
