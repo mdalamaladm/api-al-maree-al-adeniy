@@ -7,6 +7,16 @@ export class MediaController {
 
   @Get()
   findAll() {
-    return this.mediaService.findAll();
+    return this.mediaService.findAll({
+      orderBy: [
+        {
+          createdAt: 'asc'
+        },
+      ],
+      select: {
+        name: true,
+        alias: true,
+      }
+    });
   }
 }

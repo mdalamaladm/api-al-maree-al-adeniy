@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { LoginAdminDto } from './dto/login-admin.dto';
 import { MediaService } from '../media/media.service';
@@ -18,6 +18,12 @@ import { UpdateMediaDto } from '../media/dto/update-media.dto';
 import { UpdateTypeDto } from '../type/dto/update-type.dto';
 import { UpdateContentDto } from '../content/dto/update-content.dto';
 
+type AdminRequest = Request & {
+  user: {
+    username: string;
+  }
+}
+
 @Controller('admin')
 export class AdminController {
   constructor (
@@ -31,7 +37,7 @@ export class AdminController {
 
   @Post('auth')
   async login(@Body() loginAdminDto: LoginAdminDto) {
-    return await this.adminService.login(loginAdminDto);
+    return await this.adminService.auth(loginAdminDto);
   }
 
   @UseGuards(AuthGuard)
@@ -72,14 +78,36 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Post('file')
-  createFile(@Body() data: CreateFileDto) {
+  createFile(
+    @Body() data: CreateFileDto,
+    @Req() request: AdminRequest,
+  ) {
+    data.createdBy = request.user.username;
+    data.updatedBy = request.user.username;
+
     return this.fileService.create(data);
   }
 
   @UseGuards(AuthGuard)
   @Get('file')
   findAllFile() {
-    return this.fileService.findAll();
+    return this.fileService.findAll({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+      select: {
+        id: true,
+        name: true,
+        mediaId: true,
+        typeId: true,
+        contentId: true,
+        media: { select: { name: true } },
+        type: { select: { name: true } },
+        content: { select: { name: true } },
+      }
+    });
   }
 
 
@@ -87,8 +115,11 @@ export class AdminController {
   @Put('file/:id')
   updateFile(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: UpdateFileDto
+    @Body() data: UpdateFileDto,
+    @Req() request: AdminRequest,
   ) {
+    data.updatedBy = request.user.username;
+
     return this.fileService.update(id, data);
   }
 
@@ -100,22 +131,37 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Post('media')
-  createMedia(@Body() data: CreateMediaDto) {
+  createMedia(
+    @Body() data: CreateMediaDto,
+    @Req() request: AdminRequest,
+  ) {
+    data.createdBy = request.user.username;
+    data.updatedBy = request.user.username;
+
     return this.mediaService.create(data);
   }
 
   @UseGuards(AuthGuard)
   @Get('media')
   findAllMedia() {
-    return this.mediaService.findAll();
+    return this.mediaService.findAll({
+      orderBy: [
+        {
+          createdAt: 'asc'
+        }
+      ]
+    });
   }
 
   @UseGuards(AuthGuard)
   @Put('media/:id')
   updateMedia(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: UpdateMediaDto
+    @Body() data: UpdateMediaDto,
+    @Req() request: AdminRequest,
   ) {
+    data.updatedBy = request.user.username;
+
     return this.mediaService.update(id, data);
   }
 
@@ -127,22 +173,37 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Post('type')
-  createType(@Body() data: CreateTypeDto) {
+  createType(
+    @Body() data: CreateTypeDto,
+    @Req() request: AdminRequest,
+  ) {
+    data.createdBy = request.user.username;
+    data.updatedBy = request.user.username;
+
     return this.typeService.create(data);
   }
 
   @UseGuards(AuthGuard)
   @Get('type')
   findAllType() {
-    return this.typeService.findAll();
+    return this.typeService.findAll({
+      orderBy: [
+        {
+          createdAt: 'asc'
+        }
+      ],
+    });
   }
   
   @UseGuards(AuthGuard)
   @Put('type/:id')
   updateType(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: UpdateTypeDto
+    @Body() data: UpdateTypeDto,
+    @Req() request: AdminRequest,
   ) {
+    data.updatedBy = request.user.username;
+
     return this.typeService.update(id, data);
   }
 
@@ -154,22 +215,37 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Post('content')
-  createContent(@Body() data: CreateContentDto) {
+  createContent(
+    @Body() data: CreateContentDto,
+    @Req() request: AdminRequest,
+  ) {
+    data.createdBy = request.user.username;
+    data.updatedBy = request.user.username;
+
     return this.contentService.create(data);
   }
 
   @UseGuards(AuthGuard)
   @Get('content')
   findAllContent() {
-    return this.contentService.findAll();
+    return this.contentService.findAll({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+    });
   }
 
   @UseGuards(AuthGuard)
   @Put('content/:id')
   updateContent(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: UpdateContentDto
+    @Body() data: UpdateContentDto,
+    @Req() request: AdminRequest,
   ) {
+    data.updatedBy = request.user.username;
+
     return this.contentService.update(id, data);
   }
 

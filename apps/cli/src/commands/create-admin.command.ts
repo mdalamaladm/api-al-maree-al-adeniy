@@ -28,6 +28,8 @@ export class CreateAdminCommand extends CommandRunner {
         username: answer.username,
         password: hashSync(salt + password, 10),
         salt,
+        createdBy: 'superadmin',
+        updatedBy: 'superadmin',
       }
 
       const admin = await this.prisma.admin.create({ data });

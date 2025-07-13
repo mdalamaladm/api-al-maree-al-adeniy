@@ -14,24 +14,8 @@ export class FileService {
     return await this.prisma.file.create({ data })
   }
 
-  async findAll() {
-    return await this.prisma.file.findMany({
-      orderBy: [
-        {
-          id: 'asc'
-        }
-      ],
-      select: {
-        id: true,
-        name: true,
-        mediaId: true,
-        typeId: true,
-        contentId: true,
-        media: { select: { name: true } },
-        type: { select: { name: true } },
-        content: { select: { name: true } },
-      }
-    });
+  async findAll(params) {
+    return await this.prisma.file.findMany(params);
   }
 
   async findOne(id: string) {

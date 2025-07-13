@@ -8,9 +8,11 @@ import { DeleteAdminQuestions } from './questions/delete-admin-questions';
 import { CreateCategoryCommand } from './commands/create-category-command';
 import { CreateCategoryQuestions } from './questions/create-category-questions';
 import { SeedCommand } from './commands/seed-command';
+import { CreateSuperadminCommand } from './commands/create-superadmin.command';
 
 @Module({
   providers: [
+    CreateSuperadminCommand,
     CreateAdminCommand,
     CreateAdminQuestions,
     DeleteAdminCommand,

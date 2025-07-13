@@ -8,6 +8,16 @@ export class TypeController {
   
   @Get()
   findAll() {
-    return this.typeService.findAll();
+    return this.typeService.findAll({
+      orderBy: [
+        {
+          createdAt: 'asc'
+        }
+      ],
+      select: {
+        name: true,
+        alias: true,
+      }
+    });
   }
 }

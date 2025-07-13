@@ -9,23 +9,17 @@ export class MediaService {
     return await this.prisma.media.create({ data });
   }
 
-  async findAll() {
-    return await this.prisma.media.findMany({
-      orderBy: [
-        {
-          id: 'asc'
-        }
-      ],
-    });
+  async findAll(params) {
+    return await this.prisma.media.findMany(params);
   }
 
   async update(id, data) {
-    if (id === 1 || id === 2 || id === 3) {
+    if (id === 'none' || id === 'audio' || id === 'video') {
       throw new HttpException('Cannot update default value', HttpStatus.BAD_REQUEST);
     } else {
       return await this.prisma.media.update({
         where: {
-          id
+          alias: id
         },
         data
       });
@@ -33,11 +27,13 @@ export class MediaService {
   }
 
   async delete(id) {
-    if (id === 1 || id === 2 || id === 3) {
+    if (id === 'none' || id === 'audio' || id === 'video') {
       throw new HttpException('Cannot delete default value', HttpStatus.BAD_REQUEST);
     } else {
       return await this.prisma.media.delete({
-        where: { id }
+        where: {
+          alias: id
+        }
       });
     }
   }

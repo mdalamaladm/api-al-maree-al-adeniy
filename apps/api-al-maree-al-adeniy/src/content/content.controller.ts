@@ -8,6 +8,17 @@ export class ContentController {
   
   @Get()
   findAll() {
-    return this.contentService.findAll();
+    return this.contentService.findAll({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+      select: {
+        id: true,
+        name: true,
+        isLecture: true,
+      }
+    });
   }
 }

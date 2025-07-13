@@ -10,7 +10,7 @@ export class AdminService {
     private readonly jwt: JwtService
   ) {}
 
-  async login(payload) {
+  async auth(payload) {
     const admin = await this.prisma.admin.findUnique({
       where: {
         username: payload.username

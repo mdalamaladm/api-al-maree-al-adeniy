@@ -18,17 +18,29 @@ model Admin {
   username String @id
   password String
   salt String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String 
+  updatedBy String
 }
 
 model Media {
-  id Int @id @default(autoincrement())
+  alias String @id
   name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+  updatedBy String
   files File[]
 }
 
 model Type {
-  id Int @id @default(autoincrement())
+  alias String @id
   name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+  updatedBy String
   files File[]
 }
 
@@ -36,6 +48,10 @@ model Content {
   id Int @id @default(autoincrement())
   name String
   isLecture Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+  updatedBy String
   files File[]
 }
 
@@ -43,10 +59,14 @@ model File {
   id Int @id @default(autoincrement())
   key String
   name String
-  media Media @relation(fields: [mediaId], references: [id], onDelete: SetDefault)
-  type Type @relation(fields: [typeId], references: [id], onDelete: SetDefault)
+  media Media @relation(fields: [mediaId], references: [alias], onDelete: SetDefault)
+  type Type @relation(fields: [typeId], references: [alias], onDelete: SetDefault)
   content Content @relation(fields: [contentId], references: [id], onDelete: SetDefault)
-  mediaId Int @default(1)
-  typeId Int @default(1)
+  mediaId String @default("none")
+  typeId String @default("none")
   contentId Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  createdBy String
+  updatedBy String
 }

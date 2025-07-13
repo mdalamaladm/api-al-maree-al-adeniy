@@ -9,7 +9,17 @@ export class FileController {
 
   @Get()
   findAll() {
-    return this.fileService.findAll();
+    return this.fileService.findAll({
+      orderBy: [
+        {
+          id: 'asc'
+        }
+      ],
+      select: {
+        id: true,
+        name: true
+      }
+    });
   }
 
   @Get('/:id')
