@@ -125,7 +125,7 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Delete('file/:id')
-  deleteFile(@Param('id', ParseIntPipe) id: string) {
+  deleteFile(@Param('id', ParseIntPipe) id: number) {
     return this.fileService.delete(id)
   }
 
@@ -156,7 +156,7 @@ export class AdminController {
   @UseGuards(AuthGuard)
   @Put('media/:id')
   updateMedia(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() data: UpdateMediaDto,
     @Req() request: AdminRequest,
   ) {
@@ -167,7 +167,7 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Delete('media/:id')
-  deleteMedia(@Param('id', ParseIntPipe) id: number) {
+  deleteMedia(@Param('id') id: string) {
     return this.mediaService.delete(id);
   }
 
@@ -198,7 +198,7 @@ export class AdminController {
   @UseGuards(AuthGuard)
   @Put('type/:id')
   updateType(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id') id: string,
     @Body() data: UpdateTypeDto,
     @Req() request: AdminRequest,
   ) {
@@ -209,7 +209,7 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Delete('type/:id')
-  deleteType(@Param('id', ParseIntPipe) id: number) {
+  deleteType(@Param('id') id: string) {
     return this.typeService.delete(id);
   }
 

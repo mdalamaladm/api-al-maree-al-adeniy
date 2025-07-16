@@ -12,6 +12,8 @@ export class SeedCommand extends CommandRunner {
       const medias = await this.prisma.media.createManyAndReturn({
         data: [
           { name: 'الوسيطة المجهولة', alias: 'none', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'الصوتية', alias: 'audio', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'الفيديو', alias: 'video', createdBy: 'superadmin', updatedBy: 'superadmin' },
         ]
       });
 
