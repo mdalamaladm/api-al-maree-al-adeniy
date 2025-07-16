@@ -106,6 +106,10 @@ export class AdminController {
         media: { select: { name: true } },
         type: { select: { name: true } },
         content: { select: { name: true } },
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        updatedBy: true,
       }
     });
   }

@@ -1,8 +1,7 @@
 export class UpdateFileDto {
   name: string;
-  alias: string;
-  mediaId: number;
-  typeId: number;
+  mediaId: string;
+  typeId: string;
   contentId: number;
   updatedBy: string;
 }

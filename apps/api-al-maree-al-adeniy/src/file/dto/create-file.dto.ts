@@ -1,9 +1,8 @@
 export class CreateFileDto {
   name: string;
-  alias: string;
   key: string;
-  mediaId: number;
-  typeId: number;
+  mediaId: string;
+  typeId: string;
   contentId: number;
   createdBy: string;
   updatedBy: string;
