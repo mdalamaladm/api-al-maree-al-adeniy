@@ -103,8 +103,18 @@ export class AdminController {
         mediaId: true,
         typeId: true,
         contentId: true,
-        media: { select: { name: true } },
-        type: { select: { name: true } },
+        media: {
+          select: {
+            alias: true,
+            name: true,
+          }
+        },
+        type: {
+          select: {
+            alias: true,
+            name: true,
+          }
+        },
         content: { select: { name: true } },
         createdAt: true,
         updatedAt: true,
@@ -130,7 +140,7 @@ export class AdminController {
   @UseGuards(AuthGuard)
   @Delete('file/:id')
   deleteFile(@Param('id', ParseIntPipe) id: number) {
-    return this.fileService.delete(id)
+    return this.fileService.delete(id);
   }
 
   @UseGuards(AuthGuard)
@@ -147,14 +157,47 @@ export class AdminController {
 
   @UseGuards(AuthGuard)
   @Get('media')
-  findAllMedia() {
-    return this.mediaService.findAll({
+  async findAllMedia() {
+    type Media = {
+      alias: string;
+      name: string;
+      createdAt: Date;
+      updatedAt: Date;
+      createdBy: string;
+      updatedBy: string;
+      types?: { type: string }[] | undefined;
+    }
+
+    const res: Media[] = await this.mediaService.findAll({
       orderBy: [
         {
           createdAt: 'asc'
+        },
+      ],
+      select: {
+        alias: true,
+        name: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        updatedBy: true,
+        types: {
+          select: {
+            type: {
+              select: {
+                alias: true,
+                name: true,
+              }
+            }
+          }
         }
-      ]
+      }
     });
+
+    return res.map(e => ({
+      ...e,
+      types: (e?.types || []).map(t => t.type)
+    }))
   }
 
   @UseGuards(AuthGuard)

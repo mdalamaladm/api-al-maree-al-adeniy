@@ -36,6 +36,14 @@ CREATE TABLE "Type" (
 );
 
 -- CreateTable
+CREATE TABLE "MediaType" (
+    "mediaId" TEXT NOT NULL,
+    "typeId" TEXT NOT NULL,
+
+    CONSTRAINT "MediaType_pkey" PRIMARY KEY ("mediaId","typeId")
+);
+
+-- CreateTable
 CREATE TABLE "Content" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -63,6 +71,12 @@ CREATE TABLE "File" (
 
     CONSTRAINT "File_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "MediaType" ADD CONSTRAINT "MediaType_mediaId_fkey" FOREIGN KEY ("mediaId") REFERENCES "Media"("alias") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "MediaType" ADD CONSTRAINT "MediaType_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "Type"("alias") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "File" ADD CONSTRAINT "File_mediaId_fkey" FOREIGN KEY ("mediaId") REFERENCES "Media"("alias") ON DELETE SET DEFAULT ON UPDATE CASCADE;

@@ -14,8 +14,16 @@ export class MediaController {
         },
       ],
       select: {
-        name: true,
-        alias: true,
+        types: {
+          select: {
+            type: {
+              select: {
+                alias: true,
+                name: true,
+              }
+            }
+          }
+        }
       }
     });
   }

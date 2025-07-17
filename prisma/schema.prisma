@@ -32,6 +32,7 @@ model Media {
   createdBy String
   updatedBy String
   files File[]
+  types MediaType[]
 }
 
 model Type {
@@ -42,6 +43,16 @@ model Type {
   createdBy String
   updatedBy String
   files File[]
+  medias MediaType[]
+}
+
+model MediaType {
+  media Media @relation(fields: [mediaId], references: [alias])
+  type Type @relation(fields: [typeId], references: [alias])
+  mediaId String
+  typeId String
+
+  @@id([mediaId, typeId])
 }
 
 model Content {

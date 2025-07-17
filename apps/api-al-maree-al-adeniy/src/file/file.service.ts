@@ -11,7 +11,15 @@ export class FileService {
   ) {}
 
   async create(data) {
-    return await this.prisma.file.create({ data })
+    try {
+      return await this.prisma.file.create({ data })
+    } catch (error) {
+      console.log(error);
+
+      await this.s3Client.deleteObject(data.key);
+
+      throw new InternalServerErrorException(error);
+    }
   }
 
   async findAll(params) {

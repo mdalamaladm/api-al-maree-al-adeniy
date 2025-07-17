@@ -31,6 +31,21 @@ export class SeedCommand extends CommandRunner {
 
       console.log(`Initiate type data:\n${types.map(e => ` - ${e.name} (Alias: ${e.alias})`).join('\n')}\n`);
 
+      await this.prisma.mediaType.createManyAndReturn({
+        data: [
+          { mediaId: 'audio', typeId: 'muhadharat' },
+          { mediaId: 'audio', typeId: 'khuthab' },
+          { mediaId: 'audio', typeId: 'durus' },
+          { mediaId: 'audio', typeId: 'fatawa' },
+          { mediaId: 'video', typeId: 'muhadharat' },
+          { mediaId: 'video', typeId: 'khuthab' },
+          { mediaId: 'video', typeId: 'durus' },
+          { mediaId: 'video', typeId: 'fatawa' },
+        ]
+      });
+
+      console.log('\n\nInitiate types assignment to media data\n\n');
+
       const contents = await this.prisma.content.createManyAndReturn({
         data: [
           { name: 'الموضوع المجهول', isLecture: false, createdBy: 'superadmin', updatedBy: 'superadmin' },
