@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { FileService } from './file.service';
 
 @Controller('file')
@@ -8,8 +8,11 @@ export class FileController {
   ) {}
 
   @Get()
-  findAll() {
+  findAll(
+    @Query() query: Record<string, any>
+  ) {
     return this.fileService.findAll({
+      where: query,
       orderBy: [
         {
           id: 'asc'
@@ -17,7 +20,25 @@ export class FileController {
       ],
       select: {
         id: true,
-        name: true
+        name: true,
+        media: {
+          select: {
+            alias: true,
+            name: true,
+          }
+        },
+        type: {
+          select: {
+            alias: true,
+            name: true,
+          }
+        },
+        content: {
+          select: {
+            id: true,
+            name: true,
+          }
+        }
       }
     });
   }

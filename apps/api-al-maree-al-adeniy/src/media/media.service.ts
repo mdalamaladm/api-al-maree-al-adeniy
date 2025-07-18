@@ -13,6 +13,10 @@ export class MediaService {
     return await this.prisma.media.findMany(params);
   }
 
+  async findUnique(params) {
+    return await this.prisma.media.findUniqueOrThrow(params);
+  }
+
   async update(id, data) {
     if (id === 'none' || id === 'audio' || id === 'video') {
       throw new HttpException('Cannot update default value', HttpStatus.BAD_REQUEST);

@@ -13,6 +13,10 @@ export class TypeService {
     return await this.prisma.type.findMany(params);
   }
 
+  async findUnique(params) {
+    return await this.prisma.type.findUnique(params);
+  }
+
   async update(id, data) {
     if (id === 'none' || id === 'muhadharat' || id === 'khuthab' || id === 'durus' || id === 'fatawa') {
       throw new HttpException('Cannot update default value', HttpStatus.BAD_REQUEST);

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { TypeService } from './type.service';
 
 @Controller('type')
@@ -14,6 +14,21 @@ export class TypeController {
           createdAt: 'asc'
         }
       ],
+      select: {
+        name: true,
+        alias: true,
+      }
+    });
+  }
+
+  @Get(':id')
+  findUnique(
+    @Param('id') id: string
+  ) {
+    return this.typeService.findUnique({
+      where: {
+        alias: id
+      },
       select: {
         name: true,
         alias: true,
