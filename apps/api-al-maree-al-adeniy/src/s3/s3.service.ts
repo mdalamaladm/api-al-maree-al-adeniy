@@ -1,4 +1,4 @@
-import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client, UploadPartCommand } from '@aws-sdk/client-s3';
+import { CompleteMultipartUploadCommand, CreateMultipartUploadCommand, DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client, UploadPartCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -28,6 +28,21 @@ export class S3Service {
       return url;
     } catch (error) {
       throw new InternalServerErrorException('Failed to generate pre-signed URL');
+    }
+  }
+
+  async getMeta (key: string) {
+    try {
+      const command = new HeadObjectCommand({
+        Bucket: this.bucketName,
+        Key: key,
+      });
+
+      const meta = await this.s3Client.send(command);
+
+      return meta;
+    } catch (error) {
+      throw new InternalServerErrorException('Failed to get meta');
     }
   }
 

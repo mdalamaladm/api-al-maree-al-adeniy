@@ -100,6 +100,7 @@ export class AdminController {
       select: {
         id: true,
         name: true,
+        extension: true,
         mediaId: true,
         typeId: true,
         contentId: true,

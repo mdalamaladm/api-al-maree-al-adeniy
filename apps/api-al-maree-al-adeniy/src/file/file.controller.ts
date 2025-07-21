@@ -1,10 +1,13 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { FileService } from './file.service';
+import { S3Service } from '../s3/s3.service';
+import { File } from 'generated/prisma';
 
 @Controller('file')
 export class FileController {
   constructor (
     private readonly fileService: FileService,
+    private readonly s3Client: S3Service,
   ) {}
 
   @Get()
@@ -43,8 +46,48 @@ export class FileController {
     });
   }
 
+  @Get('/meta/:id')
+  async findMeta(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: Record<string, any>,
+  ) {
+    const file: File | null = await this.fileService.findUnique({
+      where: {
+        id
+      }
+    });
+
+    if (!file) {
+      throw new HttpException('Id is invalid', HttpStatus.BAD_REQUEST);
+    }
+
+    const meta = await this.s3Client.getMeta(file.key);
+
+    const returnedMeta = {};
+
+    for (const key in query) {
+      if (query[key] === 'true') {
+        returnedMeta[key] = meta[key];
+      }
+    }
+
+    return returnedMeta;
+  }
+
   @Get('/:id')
-  findOne(@Param('id') id: string) {
-    return this.fileService.findOne(id);
+  async findUnique(
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    const file: File | null = await this.fileService.findUnique({
+      where: {
+        id
+      }
+    });
+
+    if (!file) {
+      throw new HttpException('Id is invalid', HttpStatus.BAD_REQUEST);
+    }
+
+    return await this.s3Client.getDownloadPresignedUrl(file.key, 300);
   }
 }

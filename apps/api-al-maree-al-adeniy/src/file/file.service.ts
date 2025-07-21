@@ -26,13 +26,8 @@ export class FileService {
     return await this.prisma.file.findMany(params);
   }
 
-  async findOne(id: string) {
-    try {
-      return await this.s3Client.getDownloadPresignedUrl("audio/muhadharat/test.mp3", 300);
-    } catch (error) {
-      console.log(error);
-      throw new InternalServerErrorException(error);
-    }
+  async findUnique(params) {
+    return await this.prisma.file.findUnique(params);
   }
 
   async update(id, data) {
