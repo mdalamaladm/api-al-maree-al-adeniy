@@ -9,6 +9,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { MediaModule } from './media/media.module';
 import { TypeModule } from './type/type.module';
 import { ContentModule } from './content/content.module';
+import { CommandService } from './command/command.service';
+import { CommandModule } from './command/command.module';
 
 @Module({
   imports: [
@@ -23,8 +25,9 @@ import { ContentModule } from './content/content.module';
     MediaModule,
     TypeModule,
     ContentModule,
+    CommandModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CommandService],
 })
 export class AppModule {}

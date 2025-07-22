@@ -2,12 +2,14 @@ import { Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Query 
 import { FileService } from './file.service';
 import { S3Service } from '../s3/s3.service';
 import { File } from 'generated/prisma';
+import { CommandService } from '../command/command.service';
 
 @Controller('file')
 export class FileController {
   constructor (
     private readonly fileService: FileService,
     private readonly s3Client: S3Service,
+    private readonly command: CommandService,
   ) {}
 
   @Get()
@@ -88,6 +90,11 @@ export class FileController {
       throw new HttpException('Id is invalid', HttpStatus.BAD_REQUEST);
     }
 
-    return await this.s3Client.getDownloadPresignedUrl(file.key, 300);
+    const url = await this.s3Client.getDownloadPresignedUrl(file.key, 300);
+
+    const durationRes = await this.command.runBashCommand(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${url}"`);
+    const duration = parseFloat(durationRes);
+
+    return { url, duration }
   }
 }
