@@ -90,11 +90,11 @@ export class FileController {
       throw new HttpException('Id is invalid', HttpStatus.BAD_REQUEST);
     }
 
-    const url = await this.s3Client.getDownloadPresignedUrl(file.key, 300);
-
-    const durationRes = await this.command.runBashCommand(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${url}"`);
+    const src = await this.s3Client.getDownloadPresignedUrl(file.key, 300);
+    
+    const durationRes = await this.command.runBashCommand(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${src}"`);
     const duration = parseFloat(durationRes);
 
-    return { url, duration }
+    return { src, duration }
   }
 }
