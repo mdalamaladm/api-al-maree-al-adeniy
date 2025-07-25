@@ -26,6 +26,7 @@ export class FileController {
       select: {
         id: true,
         name: true,
+        amplitudes: true,
         media: {
           select: {
             alias: true,
