@@ -11,9 +11,9 @@ export class SeedCommand extends CommandRunner {
     try {
       const medias = await this.prisma.media.createManyAndReturn({
         data: [
-          { name: 'الوسيطة المجهولة', alias: 'none', createdBy: 'superadmin', updatedBy: 'superadmin' },
-          { name: 'الصوتية', alias: 'audio', createdBy: 'superadmin', updatedBy: 'superadmin' },
-          { name: 'الفيديو', alias: 'video', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'وسيطة مجهولة', alias: 'none', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'صوتيات', alias: 'audio', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'فيديوهات', alias: 'video', createdBy: 'superadmin', updatedBy: 'superadmin' },
         ]
       });
 
@@ -21,11 +21,11 @@ export class SeedCommand extends CommandRunner {
 
       const types = await this.prisma.type.createManyAndReturn({
         data: [
-          { name: 'النوع المجهول', alias: 'none', createdBy: 'superadmin', updatedBy: 'superadmin' },
-          { name: 'المحاضرات', alias: 'muhadharat', createdBy: 'superadmin', updatedBy: 'superadmin' },
-          { name: 'الخطب', alias: 'khuthab', createdBy: 'superadmin', updatedBy: 'superadmin' },
-          { name: 'الدروس', alias: 'durus', createdBy: 'superadmin', updatedBy: 'superadmin' },
-          { name: 'الفتاوى', alias: 'fatawa', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'نوع مجهول', alias: 'none', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'محاضرات', alias: 'muhadharat', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'خطب', alias: 'khuthab', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'دروس', alias: 'durus', createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'فتاوى', alias: 'fatawa', createdBy: 'superadmin', updatedBy: 'superadmin' },
         ]
       });
 
@@ -48,7 +48,7 @@ export class SeedCommand extends CommandRunner {
 
       const contents = await this.prisma.content.createManyAndReturn({
         data: [
-          { name: 'الموضوع المجهول', isLecture: false, createdBy: 'superadmin', updatedBy: 'superadmin' },
+          { name: 'موضوع مجهول', isLecture: false, createdBy: 'superadmin', updatedBy: 'superadmin' },
         ]
       });
 
