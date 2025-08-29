@@ -93,9 +93,6 @@ export class FileController {
 
     const src = await this.s3Client.getDownloadPresignedUrl(file.key, 300);
     
-    const durationRes = await this.command.runBashCommand(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${src}"`);
-    const duration = parseFloat(durationRes);
-
-    return { src, duration }
+    return { src }
   }
 }
