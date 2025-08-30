@@ -9,13 +9,14 @@ export class FileController {
   constructor (
     private readonly fileService: FileService,
     private readonly s3Client: S3Service,
-    private readonly command: CommandService,
   ) {}
 
   @Get()
   findAll(
     @Query() query: Record<string, any>
   ) {
+    if (query.contentId) query.contentId = +query.contentId;
+
     return this.fileService.findAll({
       where: query,
       orderBy: [
@@ -47,34 +48,6 @@ export class FileController {
         }
       }
     });
-  }
-
-  @Get('/meta/:id')
-  async findMeta(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() query: Record<string, any>,
-  ) {
-    const file: File | null = await this.fileService.findUnique({
-      where: {
-        id
-      }
-    });
-
-    if (!file) {
-      throw new HttpException('Id is invalid', HttpStatus.BAD_REQUEST);
-    }
-
-    const meta = await this.s3Client.getMeta(file.key);
-
-    const returnedMeta = {};
-
-    for (const key in query) {
-      if (query[key] === 'true') {
-        returnedMeta[key] = meta[key];
-      }
-    }
-
-    return returnedMeta;
   }
 
   @Get('/:id')
